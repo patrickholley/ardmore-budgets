@@ -2,11 +2,8 @@ import {defineConfig} from "vite";
 import * as path from "node:path";
 
 export default defineConfig({
-    plugins: [],
-    css: {
-        postcss: {
-
-        }
+    build: {
+        outDir: 'dist'
     },
     resolve: {
         alias: {
@@ -18,6 +15,5 @@ export default defineConfig({
             '@app-types': path.resolve(__dirname, './src/types'),
             '@utils': path.resolve(__dirname, './src/utils')
         },
-    },
-    assetsInclude: ['**/*.html']
+    }
 });
