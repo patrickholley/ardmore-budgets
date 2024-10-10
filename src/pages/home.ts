@@ -1,6 +1,7 @@
 import HomeStyles from "@styles/home.css?inline"
 import HomeTemplate from "@templates/home.html?raw";
 import getStyleElement from '@utils/getStyleElement';
+import store, {Unsubscribe} from "@store/store";
 
 class HomePage extends HTMLElement {
     private unsubscribe: Unsubscribe | null = null;
