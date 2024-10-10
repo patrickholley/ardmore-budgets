@@ -13,8 +13,5 @@
     "@types/node": "^22.7.4",
     "typescript": "^5.5.3",
     "vite": "^5.4.1"
-  },
-  "dependencies": {
-    "@vitejs/plugin-vue": "^5.1.4"
   }
 }

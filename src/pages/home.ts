@@ -1,9 +1,8 @@
-import store, { Unsubscribe } from '@store';
 import HomeStyles from "@styles/home.css?inline"
-import { HomeTemplate } from "@html";
-import { getStyleElement } from "@utils";
+import HomeTemplate from "@templates/home.html?raw";
+import getStyleElement from '@utils/getStyleElement';
 
-export class HomePage extends HTMLElement {
+class HomePage extends HTMLElement {
     private unsubscribe: Unsubscribe | null = null;
 
     constructor() {
@@ -12,8 +11,10 @@ export class HomePage extends HTMLElement {
     }
 
     async connectedCallback(): Promise<void> {
-        this.shadowRoot.innerHTML = HomeTemplate;
-        this.shadowRoot.appendChild(getStyleElement(HomeStyles));
+        if (this.shadowRoot) {
+            this.shadowRoot.innerHTML = HomeTemplate;
+            this.shadowRoot.appendChild(getStyleElement(HomeStyles));
+        }
 
         this.unsubscribe = store.subscribe(() => {
             //TODO: Implement
@@ -28,3 +29,5 @@ export class HomePage extends HTMLElement {
 }
 
 customElements.define('home-page', HomePage);
+
+export default HomePage;

@@ -1,24 +1,15 @@
-import getKeysFromObject from "@utils/getKeysFromObject.ts";
+import getKeysFromObject from "@utils/getKeysFromObject";
+import {PageComponents, Page, Paths, Routes} from "@app-types/router";
 
-const PageComponents = {
-    Home: 'home-page',
-    About: 'about-page',
-    Contact: 'contact-page'
-};
-
-const Paths = {
-    Home: '/',
-    About: '/about',
-    Contact: '/contact'
-};
-
-const Routes = getKeysFromObject(Paths).reduce(
-    (routesObj, key) => ({ ...routesObj, [Paths[key]]: PageComponents[key] }),
-    {}
+const routes: Routes = getKeysFromObject(Paths).reduce(
+    (routesObj, key) => {
+        const path = Paths[key as Page];
+        const page = PageComponents[key as Page];
+        return ({ ...routesObj, [path]: [page] })
+    },
+    {} as Routes
 );
 
 export default {
-    PageComponents,
-    Paths,
-    Routes
+    Routes: routes
 };

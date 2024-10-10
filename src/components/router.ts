@@ -1,8 +1,9 @@
-import '@pages';
-import { AppConstants } from "@utils";
+import '@pages/home';
+import AppConstants from "@utils/appConstants";
+import {Path, Routes} from "@app-types/router";
 
 class Router {
-    routes;
+    routes: Routes;
 
     constructor() {
         this.routes = AppConstants.Routes;
@@ -12,14 +13,15 @@ class Router {
 
     handlePopState(): void {
         const { pathname } = window.location;
-        let route = this.routes[pathname];
+        let route = this.routes[pathname as Path];
 
         if (!this.routes.hasOwnProperty(pathname)) {
             window.history.replaceState({}, '/', window.location.origin + '/');
             route = this.routes["/"];
         }
 
-        document.getElementById('app').innerHTML = `<${route}></${route}>`;
+        const appEl = document.getElementById("app");
+        if (appEl) appEl.innerHTML = `<${route} />`;
     }
 }
 
