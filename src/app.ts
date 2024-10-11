@@ -4,7 +4,7 @@ import "@styles/app.css"
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-            .register('/src/service-worker/service-worker.js')
+            .register('/service-worker.mjs', { type: 'module' })
             .then((registration) => {
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             })

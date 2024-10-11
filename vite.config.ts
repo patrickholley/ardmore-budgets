@@ -3,7 +3,16 @@ import * as path from "node:path";
 
 export default defineConfig({
     build: {
-        outDir: 'dist'
+        manifest: true,
+        outDir: 'dist',
+        rollupOptions: {
+            output: {
+                entryFileNames: 'assets/[name].[hash].js',
+                chunkFileNames: 'assets/[name].[hash].js',
+                assetFileNames: 'assets/[name].[hash].[ext]',
+                format:'esm'
+            }
+        }
     },
     resolve: {
         alias: {
