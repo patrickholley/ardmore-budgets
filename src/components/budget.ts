@@ -1,10 +1,8 @@
-import HomeStyles from "@styles/home.css?inline"
-import HomeTemplate from "@templates/home.html?raw";
-import getStyleElement from '@utils/getStyleElement';
+import BudgetTemplate from "@templates/budget.html?raw";
+//import getStyleElement from '@utils/getStyleElement';
 import store, {Unsubscribe} from "@store/store";
-import "@components/budget";
 
-class HomePage extends HTMLElement {
+class Budget extends HTMLElement {
     private unsubscribe: Unsubscribe | null = null;
 
     constructor() {
@@ -14,8 +12,8 @@ class HomePage extends HTMLElement {
 
     async connectedCallback(): Promise<void> {
         if (this.shadowRoot) {
-            this.shadowRoot.innerHTML = HomeTemplate;
-            this.shadowRoot.appendChild(getStyleElement(HomeStyles));
+            this.shadowRoot.innerHTML = BudgetTemplate;
+            //this.shadowRoot.appendChild(getStyleElement(HomeStyles));
         }
 
         this.unsubscribe = store.subscribe(() => {
@@ -30,6 +28,6 @@ class HomePage extends HTMLElement {
     }
 }
 
-customElements.define('home-page', HomePage);
+customElements.define('ard-budge', Budget);
 
-export default HomePage;
+export default Budget;
