@@ -1,10 +1,12 @@
 import "@components/router";
 import "@styles/app.css"
 
+const { MODE, VITE_APP_VERSION } = import.meta.env;
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker
-            .register('/service-worker.mjs', { type: 'module' })
+            .register(`/service-worker.js?MODE=${MODE}&VERSION=${VITE_APP_VERSION}`, { type: 'module' })
             .then((registration) => {
                 console.log('ServiceWorker registration successful with scope: ', registration.scope);
             })

@@ -1,5 +1,5 @@
 {
-  "name": "Ardmore Budgets",
+  "name": "Ardbudge",
   "short_name": "Ardbudge",
   "description": "A basic budget app for the citizens of Ardmore",
   "start_url": "/",
@@ -8,7 +8,7 @@
   "theme_color": "darkseagreen",
   "icons": [
     {
-      "src": "/public/dango.ico",
+      "src": "/dango.ico",
       "sizes": "128x128",
       "type": "image/ico"
     }

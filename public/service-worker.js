@@ -1,19 +1,40 @@
-const isDevelopment = import.meta?.env?.MODE === 'development';
-const CACHE_NAME = `my-app-cache-v${import.meta?.env?.VITE_APP_VERSION}`;
+const getQueryParams = () => {
+  const params = new URL(self.location).searchParams;
+  const envVariables = {};
+  for (const [key, value] of params.entries()) {
+    envVariables[key] = value;
+  }
+  return envVariables;
+}
+
+const { MODE, VERSION } = getQueryParams();
+
+const isDevelopment = MODE === 'development';
+const CACHE_NAME = `my-app-cache-v${VERSION}`;
 
 const DEV_FILES_TO_CACHE = [
     '/',
-    '/public/dango.ico',
+    '/dango.ico',
     '/index.html',
     '/src/app.ts',
     '/src/components/budget.ts',
     '/src/components/router.ts',
+    '/src/pages/home.ts',
+    '/src/store/store.ts',
+    '/src/styles/app.ts',
+    '/src/styles/home.ts',
+    '/src/templates/budget.ts',
+    '/src/templates/home.ts',
+    '/src/utils/appConstants.ts',
+    '/src/utils/getKeysFromObjects.ts',
+    '/src/utils/getStyleElements.ts'
 ];
 
 console.log('Service Worker script started.');
 
 self.addEventListener('install', (event) => {
     console.log('installing');
+
     if (isDevelopment) {
         // Cache development files
         event.waitUntil(
@@ -32,7 +53,7 @@ self.addEventListener('install', (event) => {
                     const filesToCache = [
                         '/',
                         '/index.html',
-                        ...Object.values(manifest).map(entry => `/assets/${entry.file}`),
+                        ...Object.values(manifest).map(entry => [entry.css[0], entry.file]),
                     ];
 
                     return caches.open(CACHE_NAME)
@@ -44,6 +65,7 @@ self.addEventListener('install', (event) => {
         );
     }
 });
+
 self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
     event.waitUntil(
