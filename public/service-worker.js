@@ -16,24 +16,13 @@ const DEV_FILES_TO_CACHE = [
     '/',
     '/dango.ico',
     '/index.html',
-    '/src/app.ts',
-    '/src/components/budget.ts',
-    '/src/components/router.ts',
-    '/src/pages/home.ts',
-    '/src/store/store.ts',
-    '/src/styles/app.ts',
-    '/src/styles/home.ts',
-    '/src/templates/budget.ts',
-    '/src/templates/home.ts',
-    '/src/utils/appConstants.ts',
-    '/src/utils/getKeysFromObjects.ts',
-    '/src/utils/getStyleElements.ts'
+    '/src/app.ts'
 ];
 
 console.log('Service Worker script started.');
 
 self.addEventListener('install', (event) => {
-    console.log('installing');
+    console.log('Installing...');
 
     if (isDevelopment) {
         // Cache development files
@@ -41,6 +30,7 @@ self.addEventListener('install', (event) => {
             caches.open(CACHE_NAME)
                 .then(cache => {
                     console.log('Opened cache:', CACHE_NAME);
+                    console.log('Files to cache:', DEV_FILES_TO_CACHE);
                     return cache.addAll(DEV_FILES_TO_CACHE);
                 })
         );
@@ -56,6 +46,7 @@ self.addEventListener('install', (event) => {
                         ...Object.values(manifest).map(entry => [entry.css[0], entry.file]),
                     ];
 
+                    console.log('Files to cache:', filesToCache);
                     return caches.open(CACHE_NAME)
                         .then(cache => {
                             console.log('Opened cache:', CACHE_NAME);
@@ -68,12 +59,14 @@ self.addEventListener('install', (event) => {
 
 self.addEventListener('activate', (event) => {
     const cacheWhitelist = [CACHE_NAME];
+
     event.waitUntil(
         caches.keys().then(cacheNames => {
-            console.log('caching');
+            console.log('Caching');
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (!cacheWhitelist.includes(cacheName)) {
+                        console.log('Deleting file from cache:', cacheName);
                         return caches.delete(cacheName);
                     }
                 })
@@ -86,7 +79,7 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                console.log('responding');
+                console.log('Responding');
                 if (response) {
                     return response;
                 }
