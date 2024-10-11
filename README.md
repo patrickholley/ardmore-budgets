@@ -1,3 +1,3 @@
-# ardmore-budgets
-# ardmore-budgets
-# ardmore-budgets
+# Ardbudge
+
+A budget app for the citizens of Ardmore
