@@ -43,7 +43,7 @@ self.addEventListener('install', (event) => {
                     const filesToCache = [
                         '/',
                         '/index.html',
-                        ...Object.values(manifest).map(entry => [entry.css[0], entry.file]),
+                        ...Object.values(manifest).map(entry => [entry.css[0], entry.file]).flat(),
                     ];
 
                     console.log('Files to cache:', filesToCache);
@@ -62,7 +62,7 @@ self.addEventListener('activate', (event) => {
 
     event.waitUntil(
         caches.keys().then(cacheNames => {
-            console.log('Caching');
+            console.log('Caching...');
             return Promise.all(
                 cacheNames.map(cacheName => {
                     if (!cacheWhitelist.includes(cacheName)) {
@@ -76,14 +76,18 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  console.log('fetch', caches, event.request);
+
     event.respondWith(
         caches.match(event.request)
             .then(response => {
-                console.log('Responding');
+                console.log('Responding...', response);
                 if (response) {
                     return response;
                 }
                 return fetch(event.request);
-            })
+            }).catch(err => {
+          console.log(err);
+        })
     );
 });
