@@ -9,9 +9,14 @@
     "preview": "vite preview",
     "validate:ts": "tsc --noEmit"
   },
+  "dependencies": {
+    "aws-cdk-lib": "^2.0.0",
+    "constructs": "^10.0.0"
+  },
   "devDependencies": {
     "@types/node": "^22.7.4",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1"
+    "typescript": "^5.6.3",
+    "vite": "^5.4.1",
+    "tsx": "^4.19.1"
   }
 }
